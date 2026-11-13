@@ -34,14 +34,22 @@ def get_last_close(prices):
     last_row = prices[-1]
     return float(last_row["close"])
 
+def get_first_date(prices):
+    return prices[0]["date"]
+
+
+def get_last_date(prices):
+    return prices[-1]["date"]
 
 def display_market_summary(asset, prices, show_currency=True):
     print(f"{asset['ticker']} - {asset['name']}")
     print(f"Observations : {len(prices)}")
-    
+    print(f"First date   : {get_first_date(prices)}")
+    print(f"Last date    : {get_last_date(prices)}")
+
     first = get_first_close(prices)
     last = get_last_close(prices)
-    
+
     if show_currency:
         print(f"First close  : {first:.2f} {asset['currency']}")
         print(f"Last close   : {last:.2f} {asset['currency']}")
