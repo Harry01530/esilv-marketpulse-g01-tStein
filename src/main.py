@@ -66,6 +66,7 @@ def main():
     print("=== MarketPulse ===\n")
     
     print("Market configuration")
+    print("Provider: CSV")
     print(f"Period   : {LOOKBACK_LABEL}")
     print(f"Interval : {INTERVAL_LABEL}\n")
     
