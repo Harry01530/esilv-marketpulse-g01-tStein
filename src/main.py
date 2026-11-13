@@ -1,7 +1,7 @@
 from pathlib import Path
 import csv
 import json
-
+# modfi artifie pour le TD03
 DATA_DIR = Path("data/sample")
 
 # These starter values mirror config/settings.yml.
