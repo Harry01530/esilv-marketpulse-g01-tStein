@@ -37,8 +37,8 @@ def get_last_close(prices):
 
 def display_market_summary(asset, prices, show_currency=True):
     print(f"{asset['ticker']} - {asset['name']}")
+    print(f"Currency     : {asset['currency']}")
     print(f"Observations : {len(prices)}")
-    
     first = get_first_close(prices)
     last = get_last_close(prices)
     
