@@ -1,12 +1,10 @@
+
 from pathlib import Path
 import csv
 import json
 
 DATA_DIR = Path("data/sample")
 
-# These starter values mirror config/settings.yml.
-# settings.yml is a human-readable configuration contract in the CORE.
-# Parsing YAML is optional and is not required by the 18-hour lab sequence.
 LOOKBACK_LABEL = "1 month"
 INTERVAL_LABEL = "Daily"
 
@@ -38,10 +36,11 @@ def get_last_close(prices):
 def display_market_summary(asset, prices, show_currency=True):
     print(f"{asset['ticker']} - {asset['name']}")
     print(f"Observations : {len(prices)}")
-    
+    print(f"Currency     : {asset['currency']}")
+
     first = get_first_close(prices)
     last = get_last_close(prices)
-    
+
     if show_currency:
         print(f"First close  : {first:.2f} {asset['currency']}")
         print(f"Last close   : {last:.2f} {asset['currency']}")
@@ -51,29 +50,26 @@ def display_market_summary(asset, prices, show_currency=True):
 
 
 def main():
-    # 1. Chargement des données
     instruments = load_instruments()
     prices = load_prices()
 
     instrument = instruments["instrument"]
     benchmark = instruments["benchmark"]
 
-    # 2. Filtrage
     instrument_prices = filter_prices(prices, instrument["ticker"])
     benchmark_prices = filter_prices(prices, benchmark["ticker"])
 
-    # 3. Affichage final
     print("=== MarketPulse ===\n")
-    
+
     print("Market configuration")
     print(f"Period   : {LOOKBACK_LABEL}")
     print(f"Interval : {INTERVAL_LABEL}\n")
-    
+
     print("Instrument")
     display_market_summary(instrument, instrument_prices, show_currency=True)
-    
+
     print("\nBenchmark")
-    display_market_summary(benchmark, benchmark_prices, show_currency=False)
+    display_market_summary(benchmark, benchmark_prices, show_currency=True)
 
 
 if __name__ == "__main__":
