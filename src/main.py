@@ -1,7 +1,7 @@
 from pathlib import Path
 import csv
 import json
-
+# modfi artifie pour le TD03
 DATA_DIR = Path("data/sample")
 
 # These starter values mirror config/settings.yml.
@@ -24,6 +24,12 @@ def load_prices():
 def filter_prices(prices, ticker):
     return [row for row in prices if row["ticker"] == ticker]
 
+def get_first_date(prices):
+    return prices[0]["date"]
+
+def get_last_date(prices):
+    return prices[-1]["date"]
+
 
 def get_first_close(prices):
     first_row = prices[0]
@@ -39,6 +45,13 @@ def display_market_summary(asset, prices, show_currency=True):
     print(f"{asset['ticker']} - {asset['name']}")
     print(f"Observations : {len(prices)}")
     
+    # NOUVEAU : Récupération et affichage des dates
+    first_date = get_first_date(prices)
+    last_date = get_last_date(prices)
+    print(f"First date   : {first_date}")
+    print(f"Last date    : {last_date}")
+    
+    # Reste du code inchangé (les prix de clôture)
     first = get_first_close(prices)
     last = get_last_close(prices)
     
@@ -48,7 +61,6 @@ def display_market_summary(asset, prices, show_currency=True):
     else:
         print(f"First close  : {first:.2f}")
         print(f"Last close   : {last:.2f}")
-
 
 def main():
     # 1. Chargement des données
