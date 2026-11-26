@@ -3,9 +3,14 @@ import plotly.graph_objects as go
 
 from main import build_market_snapshot
 
+app = Dash(__name__)
+
 snapshot = build_market_snapshot()
 
 provider = snapshot["provider"]
+access_mode = snapshot.get("access_mode")
+provider_display = f"{provider} - {access_mode}" if access_mode else provider
+
 lookback = snapshot["lookback"]
 interval = snapshot["interval"]
 
@@ -19,11 +24,9 @@ relative_performance = snapshot["relative_performance"]
 instrument_base_100 = snapshot["instrument_base_100"]
 benchmark_base_100 = snapshot["benchmark_base_100"]
 
-app = Dash(__name__)
-
 context = html.Div(
     [
-        html.P(f"Provider: {provider}"),
+        html.P(f"Provider: {provider_display}"),
         html.P(f"Instrument: {instrument['ticker']} - {instrument['name']}"),
         html.P(f"Benchmark: {benchmark['ticker']} - {benchmark['name']}"),
         html.P(f"Lookback: {lookback}"),
@@ -33,14 +36,30 @@ context = html.Div(
 
 performance = html.Div(
     [
-        html.Div([html.H3("Instrument Return"), html.P(f"{instrument_return:+.2f}%")]),
-        html.Div([html.H3("Benchmark Return"), html.P(f"{benchmark_return:+.2f}%")]),
-        html.Div([html.H3("Relative Performance"), html.P(f"{relative_performance:+.2f} pts")]),
+        html.Div(
+            [
+                html.H3("Instrument Return"),
+                html.P(f"{instrument_return:+.2f}%"),
+            ]
+        ),
+        html.Div(
+            [
+                html.H3("Benchmark Return"),
+                html.P(f"{benchmark_return:+.2f}%"),
+            ]
+        ),
+        html.Div(
+            [
+                html.H3("Relative Performance"),
+                html.P(f"{relative_performance:+.2f} pts"),
+            ]
+        ),
     ],
-    style={"display": "flex", "gap": "48px"},
+    style={"display": "flex", "gap": "2rem"},
 )
 
 figure = go.Figure()
+
 figure.add_trace(
     go.Scatter(
         x=[row["date"] for row in instrument_base_100],
@@ -49,6 +68,7 @@ figure.add_trace(
         name=instrument["ticker"],
     )
 )
+
 figure.add_trace(
     go.Scatter(
         x=[row["date"] for row in benchmark_base_100],
@@ -57,6 +77,7 @@ figure.add_trace(
         name=benchmark["ticker"],
     )
 )
+
 figure.update_layout(
     title="Instrument vs Benchmark - Base 100",
     xaxis_title="Date",
@@ -64,9 +85,15 @@ figure.update_layout(
 )
 
 app.layout = html.Div(
-    [html.H1("MarketPulse"), context, performance, dcc.Graph(figure=figure)],
-    style={"fontFamily": "sans-serif", "margin": "24px"},
+    [
+        html.H1("MarketPulse"),
+        context,
+        performance,
+        dcc.Graph(figure=figure),
+    ],
+    style={"maxWidth": "1000px", "margin": "0 auto", "fontFamily": "sans-serif"},
 )
+
 
 if __name__ == "__main__":
     app.run(debug=False)
