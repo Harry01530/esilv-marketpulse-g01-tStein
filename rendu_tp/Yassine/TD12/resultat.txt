@@ -1,0 +1,35 @@
+TD12 - Integration + Release
+
+Objective:
+Prepare a reproducible final version of MarketPulse.
+
+Application commands:
+- Install: python -m pip install -r requirements.txt
+- Terminal: python src/main.py
+- Dashboard: python src/dashboard.py
+
+Architecture:
+- Provider acquisition
+- Canonical market data
+- Analytics
+- Shared build_market_snapshot()
+- Terminal and Dash dashboard
+
+Release checklist:
+[ ] Final provider/access mode confirmed
+[ ] Repository cleanup completed
+[ ] requirements.txt verified
+[ ] README instructions verified
+[ ] Terminal execution validated
+[ ] Dashboard execution validated
+[ ] No secrets committed
+[ ] Reproducibility test completed
+[ ] Final integration reviewed
+[ ] Merged main validated
+[ ] Checkpoint C evidence captured
+
+Status:
+TD12 documentation initialized. Final release validation and evidence remain to be completed.
+
+Evidence:
+See the captures/ directory.
