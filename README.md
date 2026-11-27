@@ -258,6 +258,29 @@ Instructor reference:
 docs/10_BLOOMBERG_INSTRUCTOR_REFERENCE.md
 ```
 
+
+## Validated team setup
+
+MarketPulse compares AAPL and SP500 over one month
+with daily observations.
+
+Provider: Bloomberg stage - APPROVED_SAMPLE.
+
+### Quick start
+
+Tested with Python 3.12.
+
+    python -m venv .venv
+    source .venv/bin/activate
+    python -m pip install -r requirements.txt
+    python src/main.py
+    python src/dashboard.py
+
+Dashboard: http://127.0.0.1:8050/
+
+Individual submissions: rendu_tp/
+Official checkpoint evidence: evidence/
+
 ## Student Git workflow
 
 The collaboration model is:
